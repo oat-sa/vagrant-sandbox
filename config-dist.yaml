@@ -28,6 +28,7 @@ cookbooks:
   - "php"
   - "phpmyadmin"
   - "phppgadmin"
+  - "composer"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
