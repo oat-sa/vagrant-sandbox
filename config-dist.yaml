@@ -22,8 +22,12 @@ cookbooks:
   - "hostname"
   - "timezone"
   - "apache"
+  - "mysql"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
+mysql:
+  user: "vagrant"
+  password: "vagrant"
 ssl:
   rewrite: false
