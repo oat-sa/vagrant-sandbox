@@ -24,6 +24,7 @@ cookbooks:
   - "apache"
   - "mysql"
   - "pgsql"
+  - "redis"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
