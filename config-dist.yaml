@@ -19,6 +19,7 @@ hosts:
 aliases:
   # alias: path (from /var/www)
 cookbooks:
+  - "hostname"
   - "apache"
 ssl:
   rewrite: false
