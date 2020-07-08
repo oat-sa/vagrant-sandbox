@@ -26,6 +26,7 @@ cookbooks:
   - "pgsql"
   - "redis"
   - "php"
+  - "phpmyadmin"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
@@ -36,6 +37,8 @@ mysql:
   password: "vagrant"
 pgsql:
   user: "vagrant"
+  password: "vagrant"
+phpmyadmin:
   password: "vagrant"
 ssl:
   rewrite: false
