@@ -1,0 +1,75 @@
+<VirtualHost *:80>
+    ServerAlias *.<%= @domain %>
+    VirtualDocumentRoot /var/www/<%= @path %>
+
+    UseCanonicalName    off
+    EnableSendfile      off
+    ServerSignature     off
+
+    SetEnv DATABASE_USER <%= @db_user %>
+    SetEnv DATABASE_PASSWORD <%= @db_password %>
+
+    Header set Access-Control-Allow-Origin "*"
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory "/var/www/*">
+        Options FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+
+        DirectoryIndex index.php
+        Order allow,deny
+        Allow from all
+
+        <FilesMatch "(\.tpl)$">
+            Header set Content-Type text/plain
+        </FilesMatch>
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerAlias *.<%= @domain %>
+    VirtualDocumentRoot /var/www/<%= @path %>
+    ServerName  <%= @domain %>
+
+    UseCanonicalName    off
+    EnableSendfile      off
+    ServerSignature     off
+
+    SetEnv DATABASE_USER <%= @db_user %>
+    SetEnv DATABASE_PASSWORD <%= @db_password %>
+    SetEnv SESSION_COOKIE_DOMAIN .<%= @domain %>
+
+    Header set Access-Control-Allow-Origin "*"
+
+    ErrorLog ${APACHE_LOG_DIR}/error.secure.log
+    CustomLog ${APACHE_LOG_DIR}/access.secure.log combined
+
+    SSLEngine on
+    SSLCertificateFile /var/ssl/cert/<%= @domain %>.crt
+    SSLCertificateKeyFile /var/ssl/cert/<%= @domain %>.key
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory "/var/www/*">
+        Options FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+
+        DirectoryIndex index.php
+        Order allow,deny
+        Allow from all
+
+        <FilesMatch "(\.tpl)$">
+            Header set Content-Type text/plain
+        </FilesMatch>
+    </Directory>
+</VirtualHost>

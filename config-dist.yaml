@@ -10,6 +10,15 @@ machine:
   provider: "virtualbox"
   guest_tools: true
 folders:
+  # host: guest
+  "/work": "/var/www"
+hosts:
+  # domain: path (from /var/www, accept dynamic path thank to vhost_alias)
+  "local.tao": "tao/instances/%1"                   # community.local.tao will target /var/www/tao/instances/community
+  "kitchen.tao": "tao/instances/%1/files/delivery"  # community.kitchen.tao will target /var/www/tao/instances/community/files/delivery
+aliases:
+  # alias: path (from /var/www)
 cookbooks:
+  - "apache"
 ssl:
-  rewrite: true
+  rewrite: false
