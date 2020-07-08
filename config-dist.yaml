@@ -25,9 +25,12 @@ cookbooks:
   - "mysql"
   - "pgsql"
   - "redis"
+  - "php"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
+php:
+  version: "7.2"
 mysql:
   user: "vagrant"
   password: "vagrant"
