@@ -27,6 +27,7 @@ cookbooks:
   - "redis"
   - "php"
   - "phpmyadmin"
+  - "phppgadmin"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
