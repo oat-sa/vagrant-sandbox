@@ -1,0 +1,13 @@
+machine:
+  name: "lamp"
+  hostname: "vagrant"
+  memory: "1024"
+  cpu: "1"
+  disk: "40GB"
+  ip: "192.168.33.10"
+  public: false
+  box: "generic/ubuntu2004"
+  provider: "virtualbox"
+  guest_tools: true
+folders:
+cookbooks:
