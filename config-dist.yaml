@@ -11,3 +11,5 @@ machine:
   guest_tools: true
 folders:
 cookbooks:
+ssl:
+  rewrite: true
