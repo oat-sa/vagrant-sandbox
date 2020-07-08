@@ -23,10 +23,14 @@ cookbooks:
   - "timezone"
   - "apache"
   - "mysql"
+  - "pgsql"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
 mysql:
+  user: "vagrant"
+  password: "vagrant"
+pgsql:
   user: "vagrant"
   password: "vagrant"
 ssl:
