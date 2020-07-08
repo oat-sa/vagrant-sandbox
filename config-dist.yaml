@@ -20,6 +20,10 @@ aliases:
   # alias: path (from /var/www)
 cookbooks:
   - "hostname"
+  - "timezone"
   - "apache"
+timezone:
+  area: "Europe"
+  zone: "Luxembourg"
 ssl:
   rewrite: false
