@@ -31,6 +31,12 @@ cookbooks:
   - "phppgadmin"
   - "composer"
   - "nodejs"
+  - "extra_packages"
+extra_packages:
+  # list of additional packages to install
+  - "vim"
+  - "nano"
+  - "ntp"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
