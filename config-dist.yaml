@@ -54,3 +54,4 @@ phpmyadmin:
   password: "vagrant"
 ssl:
   rewrite: false
+  bits: 2048

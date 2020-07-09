@@ -17,6 +17,8 @@
 #
 
 default["ssl"]["rewrite"] = true
+default["ssl"]["bits"] = 2048
+default["ssl"]["path"] = "/var/ssl/certs"
 default["ssl"]["country"] = "LU"
 default["ssl"]["state"] = "LU"
 default["ssl"]["locality"] = "Luxembourg"

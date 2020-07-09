@@ -97,8 +97,13 @@ def get_temp_file_path(name)
     return File.join(Chef::Config[:file_cache_path], name)
 end
 
+# generates a Diffie-Hellman group
+def ssl_dh_group(name="dhparam.pem", destination="#{node["ssl"]["path"]}")
+   execute "openssl dhparam -out #{destination}/#{name} #{node["ssl"]["bits"]}"
+end
+
 # generates a SSL certificate
-def ssl_cert(domain, destination="/var/ssl/cert", rewrite=true)
+def ssl_cert(domain, destination="#{node["ssl"]["path"]}", rewrite=node["ssl"]["rewrite"])
     crt_path = "#{destination}/#{domain}.crt"
     key_path = "#{destination}/#{domain}.key"
 
@@ -120,7 +125,7 @@ def ssl_cert(domain, destination="/var/ssl/cert", rewrite=true)
             action :create
         end
 
-        execute "openssl req -x509 -nodes -newkey rsa:4096 -sha256 -keyout #{key_path} -out #{crt_path} -days 365 -config #{config_file}"
+        execute "openssl req -x509 -nodes -newkey rsa:#{node["ssl"]["bits"]} -sha256 -keyout #{key_path} -out #{crt_path} -days 365 -config #{config_file}"
 
         delete_file config_file
     end

@@ -41,6 +41,18 @@ if not package_installed?("apache2")
         execute "a2enmod #{name}"
     end
 
+    # set a SSl security group
+    security_group = "dhparam.pem"
+    ssl_dh_group(security_group)
+    template "/etc/apache2/conf-available/ssl-params.conf" do
+        source "ssl-params.erb"
+        variables(
+            :security_group => security_group
+        )
+        action :create
+    end
+    execute "a2enconf ssl-params.conf"
+
     service "apache2" do
         action :restart
     end

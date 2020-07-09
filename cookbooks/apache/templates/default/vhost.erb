@@ -52,8 +52,8 @@
     CustomLog ${APACHE_LOG_DIR}/access.secure.log combined
 
     SSLEngine on
-    SSLCertificateFile /var/ssl/cert/<%= @domain %>.crt
-    SSLCertificateKeyFile /var/ssl/cert/<%= @domain %>.key
+    SSLCertificateFile <%= node["ssl"]["path"] %>/<%= @domain %>.crt
+    SSLCertificateKeyFile <%= node["ssl"]["path"] %>/<%= @domain %>.key
 
     <Directory />
         Options FollowSymLinks

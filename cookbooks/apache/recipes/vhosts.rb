@@ -19,7 +19,7 @@
 # install the dynamic sites
 if node["hosts"]
     Array(node["hosts"]).each do |domain, path|
-        ssl_cert(domain, "/var/ssl/cert", node["ssl"]["rewrite"])
+        ssl_cert(domain)
 
         template "/etc/apache2/sites-available/vhost-#{domain}.conf" do
             source "vhost.erb"
