@@ -16,13 +16,18 @@
 # Copyright (c) 2020 (original work) Open Assessment Technologies SA;
 #
 
-# install apache and dependencies
 if not package_installed?("apache2")
+    # install apache and dependencies
     packages =  [
         "apache2",
         "apache2-utils"
     ]
     install_packages_once packages
+
+    # setup permissions
+    user = get_user
+    execute "adduser www-data #{user}"
+    execute "usermod -a -G www-data #{user}"
 
     # install Apache2 modules
     apache_modules = [
