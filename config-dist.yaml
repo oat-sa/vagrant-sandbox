@@ -38,6 +38,7 @@ extra_packages:
   - "vim"
   - "nano"
   - "ntp"
+  - "wkhtmltopdf"
 timezone:
   area: "Europe"
   zone: "Luxembourg"
