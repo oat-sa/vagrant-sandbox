@@ -21,6 +21,7 @@ aliases:
 cookbooks:
   - "hostname"
   - "timezone"
+  - "userenv"
   - "git"
   - "apache"
   - "mysql"
