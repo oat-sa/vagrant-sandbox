@@ -99,7 +99,12 @@ end
 
 # generates a Diffie-Hellman group
 def ssl_dh_group(name="dhparam.pem", destination="#{node["ssl"]["path"]}")
-   execute "openssl dhparam -out #{destination}/#{name} #{node["ssl"]["bits"]}"
+    directory "#{destination}" do
+        action :create
+        recursive true
+    end
+
+    execute "openssl dhparam -out #{destination}/#{name} #{node["ssl"]["bits"]}"
 end
 
 # generates a SSL certificate
