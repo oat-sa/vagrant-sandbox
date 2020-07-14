@@ -9,7 +9,8 @@
     SetEnv DATABASE_USER <%= @db_user %>
     SetEnv DATABASE_PASSWORD <%= @db_password %>
 
-    Header set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set X-Frame-Options "sameorigin"
 
     ErrorLog ${APACHE_LOG_DIR}/error.log
     CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -46,7 +47,8 @@
     SetEnv DATABASE_PASSWORD <%= @db_password %>
     SetEnv SESSION_COOKIE_DOMAIN .<%= @domain %>
 
-    Header set Access-Control-Allow-Origin "*"
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set X-Frame-Options "sameorigin"
 
     ErrorLog ${APACHE_LOG_DIR}/error.secure.log
     CustomLog ${APACHE_LOG_DIR}/access.secure.log combined
