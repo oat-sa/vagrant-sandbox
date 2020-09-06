@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
     # Set share folder permissions to 777 so that apache can write files
     config.vm.synced_folder ".", "/vagrant", :mount_options => mount_options_vagrant
     if local_config["folders"]
-        Array(local_config["folders"]).each do |host, guest|
+        Array(local_config["folders"]).each do |guest, host|
             config.vm.synced_folder host, guest, mount_options: mount_options, group: 'www-data', owner: 'www-data'
         end
     end

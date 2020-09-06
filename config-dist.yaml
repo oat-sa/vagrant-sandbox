@@ -10,8 +10,8 @@ machine:
   provider: "virtualbox"
   guest_tools: true
 folders:
-  # host: guest
-  "/work": "/var/www"
+  # guest: host
+  "/var/www": "/Users/oat/projects"
 hosts:
   # domain: path (from /var/www, accept dynamic path thank to vhost_alias)
   "local.tao": "tao/instances/%1"                   # community.local.tao will target /var/www/tao/instances/community
