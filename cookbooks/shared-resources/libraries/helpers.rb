@@ -28,7 +28,7 @@ end
 
 # checks if a package is installed
 def package_installed?(name)
-    return !`dpkg -l | grep #{name}`.empty?
+    return !`dpkg -l | grep -w #{name}`.empty?
 end
 
 # installs the packages if:
