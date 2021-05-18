@@ -6,6 +6,7 @@ require 'yaml'
 root_path = File.dirname(File.expand_path(__FILE__))
 config_file = "#{root_path}/config.yaml"
 default_config_file = "#{root_path}/config-dist.yaml"
+certs_path =  "#{root_path}/certs"
 
 # initial config
 if not File.file?(config_file)
@@ -24,6 +25,28 @@ if machine.nil? or machine.empty?
     raise "The machine config is missing!"
 end
 
+# Cross-platform way of finding an executable in the $PATH.
+def which(cmd)
+    exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+    ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+        exts.each do |ext|
+            exe = File.join(path, "#{cmd}#{ext}")
+            return exe if File.executable?(exe) && !File.directory?(exe)
+        end
+    end
+    nil
+end
+
+# install certificates using https://github.com/FiloSottile/mkcert
+Dir.mkdir(certs_path) unless File.directory?(certs_path)
+if which('mkcert')
+    Array(local_config["hosts"]).each do |domain, path|
+        cert = "#{certs_path}/#{domain}"
+        if !File.file?("#{cert}.key")
+            `mkcert -key-file #{cert}.key -cert-file #{cert}.crt #{domain} *.#{domain}`
+        end
+    end
+end
 
 # configure Vagrant
 Vagrant.configure("2") do |config|
@@ -114,7 +137,8 @@ Vagrant.configure("2") do |config|
     # the path on the guest to mount the folder. And the optional third
     # argument is a set of non-required options.
     # Set share folder permissions to 777 so that apache can write files
-    config.vm.synced_folder ".", "/vagrant", :mount_options => mount_options_vagrant
+    config.vm.synced_folder root_path, "/vagrant", :mount_options => mount_options_vagrant
+    config.vm.synced_folder certs_path, "/var/ssl/certs", :mount_options => mount_options_vagrant, group: 'root', owner: 'root'
     if local_config["folders"]
         Array(local_config["folders"]).each do |guest, host|
             config.vm.synced_folder host, guest, mount_options: mount_options, group: 'www-data', owner: 'www-data'
