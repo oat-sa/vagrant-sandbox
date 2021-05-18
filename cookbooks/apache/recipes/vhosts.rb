@@ -27,6 +27,7 @@ if node["hosts"]
                 :db_user => node["pgsql"]["user"],
                 :db_password => node["pgsql"]["password"],
                 :domain => domain,
+                :dynamic => path =~ /%\d+/,
                 :path => path
             )
             action :create

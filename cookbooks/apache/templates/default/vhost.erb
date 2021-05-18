@@ -1,6 +1,11 @@
 <VirtualHost *:80>
+<% if @dynamic %>
     ServerAlias *.<%= @domain %>
     VirtualDocumentRoot /var/www/<%= @path %>
+<% else %>
+    ServerName  <%= @domain %>
+    DocumentRoot /var/www/<%= @path %>
+<% end %>
 
     UseCanonicalName    off
     EnableSendfile      off
@@ -35,8 +40,12 @@
 </VirtualHost>
 
 <VirtualHost *:443>
+<% if @dynamic %>
     ServerAlias *.<%= @domain %>
     VirtualDocumentRoot /var/www/<%= @path %>
+<% else %>
+    DocumentRoot /var/www/<%= @path %>
+<% end %>
     ServerName  <%= @domain %>
 
     UseCanonicalName    off
