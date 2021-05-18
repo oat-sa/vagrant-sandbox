@@ -161,4 +161,7 @@ Vagrant.configure("2") do |config|
 
         chef.arguments = "--chef-license accept"
     end
+
+    # Ensures the Apache service is properly started once all is settled
+    config.vm.provision "shell", inline: "service apache2 restart", run: "always"
 end
