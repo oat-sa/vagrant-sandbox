@@ -16,5 +16,5 @@
 # Copyright (c) 2020 (original work) Open Assessment Technologies SA;
 #
 
-default["timezone"]["area"] = "Europe"
-default["timezone"]["zone"] = "Luxembourg"
+default["timezone"]["area"] = "Etc"
+default["timezone"]["zone"] = "UTC"
