@@ -1,0 +1,6 @@
+phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2
+phpmyadmin phpmyadmin/dbconfig-install boolean true
+phpmyadmin phpmyadmin/mysql/admin-user string <%= node["mysql"]["user"] %>
+phpmyadmin phpmyadmin/mysql/admin-pass password <%= node["mysql"]["password"] %>
+phpmyadmin phpmyadmin/mysql/app-pass password <%= node["phpmyadmin"]["password"] %>
+phpmyadmin phpmyadmin/app-password-confirm password <%= node["phpmyadmin"]["password"] %>

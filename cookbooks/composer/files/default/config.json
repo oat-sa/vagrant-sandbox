@@ -1,0 +1,6 @@
+{
+    "config": {
+        "discard-changes": true,
+        "preferred-install" : "source"
+    }
+}

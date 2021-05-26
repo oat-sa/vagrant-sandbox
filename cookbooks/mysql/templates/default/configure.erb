@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; under version 2
+# of the License (non-upgradable).
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+# Copyright (c) 2020 (original work) Open Assessment Technologies SA;
+#
+
+SECURE_MYSQL=$(expect -c "
+set timeout 3
+spawn mysql_secure_installation -u root
+expect \"Enter current password for root (enter for none):\"
+send \"<%= @old_password %>\r\"
+expect \"root password?\"
+send \"y\r\"
+expect \"New password:\"
+send \"<%= @new_password %>\r\"
+expect \"Re-enter new password:\"
+send \"<%= @new_password %>\r\"
+expect \"Remove anonymous users?\"
+send \"y\r\"
+expect \"Disallow root login remotely?\"
+send \"y\r\"
+expect \"Remove test database and access to it?\"
+send \"y\r\"
+expect \"Reload privilege tables now?\"
+send \"y\r\"
+expect eof
+")
+
+echo "$SECURE_MYSQL"

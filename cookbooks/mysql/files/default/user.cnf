@@ -1,0 +1,3 @@
+[mysqld]
+# PHP versions before 7.4 are still using the native password plugin
+default-authentication-plugin=mysql_native_password

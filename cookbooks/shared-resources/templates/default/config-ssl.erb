@@ -1,0 +1,22 @@
+[req]
+default_bits = <%= node["ssl"]["bits"] %>
+prompt = no
+default_md = sha256
+x509_extensions = v3_req
+distinguished_name = dn
+
+[dn]
+C = <%= node["ssl"]["country"] %>
+ST = <%= node["ssl"]["state"] %>
+L = <%= node["ssl"]["locality"] %>
+O = <%= node["ssl"]["company"] %>
+OU = <%= node["ssl"]["department"] %>
+emailAddress = webmaster@<%= @domain %>
+CN = <%= @domain %>
+
+[v3_req]
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = *.<%= @domain %>
+DNS.2 = <%= @domain %>
