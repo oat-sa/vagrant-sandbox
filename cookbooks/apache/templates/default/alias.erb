@@ -1,0 +1,10 @@
+# <%= @name %> default Apache configuration
+
+Alias /<%= @name %> /var/www/<%= @path %>
+
+<Directory /var/www/<%= @path %>>
+	Options FollowSymLinks MultiViews
+	AllowOverride All
+	Require all granted
+	DirectoryIndex index.php index.html index.htm
+</Directory>

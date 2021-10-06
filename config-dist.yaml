@@ -1,0 +1,57 @@
+machine:
+  name: "lamp"
+  hostname: "vagrant"
+  memory: "1024"
+  cpu: "1"
+  disk: "40GB"
+  ip: "192.168.33.10"
+  public: false
+  box: "generic/ubuntu2004"
+  provider: "virtualbox"
+  guest_tools: true
+folders:
+  # guest: host
+  "/var/www": "/Users/oat/projects"
+hosts:
+  # domain: path (from /var/www, accept dynamic path thank to vhost_alias)
+  "local.tao": "tao/instances/%1"                   # community.local.tao will target /var/www/tao/instances/community
+  "kitchen.tao": "tao/instances/%1/files/delivery"  # community.kitchen.tao will target /var/www/tao/instances/community/files/delivery
+aliases:
+  # alias: path (from /var/www)
+cookbooks:
+  - "hostname"
+  - "timezone"
+  - "userenv"
+  - "git"
+  - "apache"
+  - "mysql"
+  - "pgsql"
+  - "redis"
+  - "php"
+  - "phpmyadmin"
+  - "phppgadmin"
+  - "composer"
+  - "nodejs"
+  - "extra_packages"
+extra_packages:
+  # list of additional packages to install
+  - "vim"
+  - "nano"
+  - "ntp"
+  - "wkhtmltopdf"
+timezone:
+  area: "Europe"
+  zone: "Luxembourg"
+php:
+  version: "7.2"
+mysql:
+  user: "vagrant"
+  password: "vagrant"
+pgsql:
+  user: "vagrant"
+  password: "vagrant"
+phpmyadmin:
+  password: "vagrant"
+ssl:
+  rewrite: false
+  bits: 2048
