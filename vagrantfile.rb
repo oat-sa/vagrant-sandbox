@@ -57,9 +57,7 @@ Vagrant.configure("2") do |config|
     # Define list of plugins to install for the local project.
     # Vagrant will require these plugins be installed and available for the project.
     # If the plugins are not available, it will attempt to automatically install them into the local project.
-    config.vagrant.plugins = [
-        "vagrant-disksize"
-    ]
+    config.vagrant.plugins = []
 
     # Provider-specific configuration so you can fine-tune various
     # backing providers for Vagrant. These expose provider-specific options.
@@ -67,6 +65,17 @@ Vagrant.configure("2") do |config|
     # View the documentation for the provider you're using for more
     # information on available options.
     case machine["provider"]
+        when "docker"
+            config.vm.provider "docker" do |docker, override|
+                override.vm.box = nil
+                override.ssh.insert_key = true
+
+                docker.build_dir = "."
+                docker.has_ssh = true
+                docker.privileged = true
+                docker.ports = ["80:80", "443:443"]
+            end
+
         when "virtualbox"
             config.vagrant.plugins.push("vagrant-vbguest")
             config.vbguest.auto_update = machine["guest_tools"]
@@ -105,31 +114,34 @@ Vagrant.configure("2") do |config|
         config.ssh.username = machine["user"]
     end
 
-    # Every Vagrant virtual environment requires a box to build off of.
-    config.vm.box = machine["box"]
+    if machine["provider"] != "docker"
+        # Apart with Docker, every Vagrant virtual environment requires a box to build off of.
+        config.vm.box = machine["box"]
 
-    # Requires vagrant plugin install vagrant-disksize`
-    config.disksize.size = machine["disk"]
+        # Requires vagrant plugin install vagrant-disksize`
+        config.vagrant.plugins.push("vagrant-disksize")
+        config.disksize.size = machine["disk"]
 
-    # Create a forwarded port mapping which allows access to a specific port
-    # within the machine from a port on the host machine. In the example below,
-    # accessing "localhost:8080" will access port 80 on the guest machine.
-    # config.vm.network :forwarded_port, guest: 80, host: 8080
+        # Create a forwarded port mapping which allows access to a specific port
+        # within the machine from a port on the host machine. In the example below,
+        # accessing "localhost:8080" will access port 80 on the guest machine.
+        # config.vm.network :forwarded_port, guest: 80, host: 8080
 
-    # Create a private network, which allows host-only access to the machine
-    # using a specific IP.
-    # !!!!! CHANGE THE IP ADDRESS FOR EACH PROJECT !!!!!
-    if machine["ip"]
-        Array(machine["ip"]).each do |ip|
-            config.vm.network :private_network, ip: ip
+        # Create a private network, which allows host-only access to the machine
+        # using a specific IP.
+        # !!!!! CHANGE THE IP ADDRESS FOR EACH PROJECT !!!!!
+        if machine["ip"]
+            Array(machine["ip"]).each do |ip|
+                config.vm.network :private_network, ip: ip
+            end
         end
-    end
 
-    # Create a public network, which generally matched to bridged network.
-    # Bridged networks make the machine appear as another physical device on
-    # your network.
-    if machine["public"]
-        config.vm.network :public_network
+        # Create a public network, which generally matched to bridged network.
+        # Bridged networks make the machine appear as another physical device on
+        # your network.
+        if machine["public"]
+            config.vm.network :public_network
+        end
     end
 
     # Share an additional folder to the guest VM. The first argument is
