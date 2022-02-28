@@ -12,7 +12,7 @@ RUN apt-get install -y --no-install-recommends ssh sudo systemd openssh-client p
 # Add vagrant user and key for SSH
 RUN useradd --create-home -s /bin/bash vagrant
 RUN echo -n 'vagrant:vagrant' | chpasswd
-RUN echo 'vagrant ALL = NOPASSWD: ALL' > /etc/sudoers.d/vagrant
+RUN echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/vagrant
 RUN chmod 440 /etc/sudoers.d/vagrant
 RUN mkdir -p /home/vagrant/.ssh
 RUN chmod 700 /home/vagrant/.ssh
