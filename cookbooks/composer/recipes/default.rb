@@ -13,15 +13,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-# Copyright (c) 2020 (original work) Open Assessment Technologies SA;
+# Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA;
 #
 
-if not package_installed?("composer")
-    # install Composer using aptitude
-    install_packages_once [ "composer" ]
-
-    # additional plugins
-    execute "composer global require hirak/prestissimo"
+if not File.exist?("composer")
+    # install Composer using the installer
+    execute_template("install.erb", {
+        :bin => node["composer"]["bin"],
+    }, "composer")
 
     # configure default
     home = Dir.home(get_user)
