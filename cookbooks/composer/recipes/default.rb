@@ -16,7 +16,7 @@
 # Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA;
 #
 
-if not File.exist?("composer")
+if not File.exist?(node["composer"]["bin"])
     # install Composer using the installer
     execute_template("install.erb", {
         :bin => node["composer"]["bin"],
