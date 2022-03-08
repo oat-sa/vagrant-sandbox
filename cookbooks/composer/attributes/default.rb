@@ -16,17 +16,4 @@
 # Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA;
 #
 
-if not File.exist?(node["composer"]["bin"])
-    # install Composer using the installer
-    execute_template("install.erb", {
-        :bin => node["composer"]["bin"],
-    }, "composer")
-
-    # configure default
-    home = Dir.home(get_user)
-    directory "#{home}/.composer/"
-    cookbook_file "#{home}/.composer/config.json" do
-        source "config.json"
-        action :create
-    end
-end
+default["composer"]["bin"] = "/usr/local/bin/composer"
