@@ -13,7 +13,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
-# Copyright (c) 2020 (original work) Open Assessment Technologies SA;
+# Copyright (c) 2020-2022 (original work) Open Assessment Technologies SA;
 #
 
 php_version = node["php"]["version"]
@@ -55,12 +55,12 @@ if php_version != installed_version
         "php#{php_version}-xsl",
         "php#{php_version}-mbstring",
         "php#{php_version}-zip",
+        "php#{php_version}-redis",
         "php-apcu",
         "php-pear",
         "php-imagick",
         "php-memcache",
-        "php-gettext",
-        "php-redis"
+        "php-gettext"
     ]
     install_packages_once php_packages
 
