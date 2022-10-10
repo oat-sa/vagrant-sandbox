@@ -1,0 +1,86 @@
+<VirtualHost *:80>
+<% if @dynamic %>
+    ServerAlias *.<%= @domain %>
+    VirtualDocumentRoot /var/www/<%= @path %>
+<% else %>
+    ServerName  <%= @domain %>
+    DocumentRoot /var/www/<%= @path %>
+<% end %>
+
+    UseCanonicalName    off
+    EnableSendfile      off
+    ServerSignature     off
+
+    SetEnv DATABASE_USER <%= @db_user %>
+    SetEnv DATABASE_PASSWORD <%= @db_password %>
+
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set X-Frame-Options "sameorigin"
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory "/var/www/*">
+        Options FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+
+        DirectoryIndex index.php
+        Order allow,deny
+        Allow from all
+
+        <FilesMatch "(\.tpl)$">
+            Header set Content-Type text/plain
+        </FilesMatch>
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:443>
+<% if @dynamic %>
+    ServerAlias *.<%= @domain %>
+    VirtualDocumentRoot /var/www/<%= @path %>
+<% else %>
+    DocumentRoot /var/www/<%= @path %>
+<% end %>
+    ServerName  <%= @domain %>
+
+    UseCanonicalName    off
+    EnableSendfile      off
+    ServerSignature     off
+
+    SetEnv DATABASE_USER <%= @db_user %>
+    SetEnv DATABASE_PASSWORD <%= @db_password %>
+    SetEnv SESSION_COOKIE_DOMAIN .<%= @domain %>
+
+    Header always set Access-Control-Allow-Origin "*"
+    Header always set X-Frame-Options "sameorigin"
+
+    ErrorLog ${APACHE_LOG_DIR}/error.secure.log
+    CustomLog ${APACHE_LOG_DIR}/access.secure.log combined
+
+    SSLEngine on
+    SSLCertificateFile <%= node["ssl"]["path"] %>/<%= @domain %>.crt
+    SSLCertificateKeyFile <%= node["ssl"]["path"] %>/<%= @domain %>.key
+
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory "/var/www/*">
+        Options FollowSymLinks MultiViews
+        AllowOverride All
+        Require all granted
+
+        DirectoryIndex index.php
+        Order allow,deny
+        Allow from all
+
+        <FilesMatch "(\.tpl)$">
+            Header set Content-Type text/plain
+        </FilesMatch>
+    </Directory>
+</VirtualHost>
